@@ -1,4 +1,4 @@
-package com.example.convidados.ui.present;
+package com.example.convidados.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.convidados.databinding.FragmentPresentBinding;
+import com.example.convidados.databinding.FragmentAbsentBinding;
+import com.example.convidados.viewmodel.AbsentViewModel;
 
-public class PresentFragment extends Fragment {
+public class AbsentFragment extends Fragment {
 
-    private FragmentPresentBinding binding;
+    private FragmentAbsentBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        PresentViewModel presentViewModel =
-                new ViewModelProvider(this).get(PresentViewModel.class);
+        AbsentViewModel absentViewModel =
+                new ViewModelProvider(this).get(AbsentViewModel.class);
 
-        binding = FragmentPresentBinding.inflate(inflater, container, false);
+        binding = FragmentAbsentBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textPresent;
-        presentViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textSlideshow;
+        absentViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
