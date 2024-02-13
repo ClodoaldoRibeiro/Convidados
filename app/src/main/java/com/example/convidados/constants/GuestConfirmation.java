@@ -1,4 +1,4 @@
-package com.example.convidados.helper.consts;
+package com.example.convidados.constants;
 
 public abstract class GuestConfirmation {
     public static int not_confirmation = 0;

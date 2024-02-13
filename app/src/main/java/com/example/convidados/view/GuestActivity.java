@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import com.example.convidados.R;
-import com.example.convidados.helper.consts.GuestConfirmation;
+import com.example.convidados.constants.GuestConfirmation;
 import com.example.convidados.model.GuestModel;
 import com.example.convidados.viewmodel.GuestViewModel;
 
