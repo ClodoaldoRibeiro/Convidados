@@ -18,6 +18,6 @@ public class GuestViewModel extends AndroidViewModel {
     }
 
     public void save(GuestModel guestModel) {
-        mGuestRepository.insert(guestModel);
+        this.mGuestRepository.insert(guestModel);
     }
 }

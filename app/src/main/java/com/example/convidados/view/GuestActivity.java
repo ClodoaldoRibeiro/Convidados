@@ -28,12 +28,13 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
         this.mViewHolder.radioNotConfirmed = findViewById(R.id.radio_not_confirmed);
         this.mViewHolder.radioPresent = findViewById(R.id.radio_present);
         this.mViewHolder.radioAbsent = findViewById(R.id.radio_absent);
+        this.mViewHolder.buttonSave = findViewById(R.id.button_save);
 
         this.setListeners();
     }
 
     private void setListeners() {
-        this.mViewHolder.radioAbsent.setOnClickListener(this);
+        this.mViewHolder.buttonSave.setOnClickListener(this);
     }
 
     @Override
