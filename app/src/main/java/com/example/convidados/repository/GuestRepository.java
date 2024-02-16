@@ -2,12 +2,14 @@ package com.example.convidados.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.convidados.constants.DataBaseConstants;
 import com.example.convidados.database.GuestDataBaseHelper;
 import com.example.convidados.model.GuestModel;
 
+import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +44,62 @@ public class GuestRepository {
         }
     }
 
+    public boolean update(GuestModel guest) {
+        try {
+            final SQLiteDatabase db = this.mGuestDataBaseHelper.getWritableDatabase();
+            String whereClause = DataBaseConstants.GUEST.COLUMNS.ID + " = ?";
+            String[] whereArgs = {String.valueOf(guest.getId())};
+
+            db.update(DataBaseConstants.GUEST.TABLE_NAME, getGuestContentValues(guest), whereClause, whereArgs);
+            db.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean delete(int guestId) {
+        try {
+            final SQLiteDatabase db = this.mGuestDataBaseHelper.getWritableDatabase();
+            String whereClause = DataBaseConstants.GUEST.COLUMNS.ID + " = ?";
+            String[] whereArgs = {String.valueOf(guestId)};
+
+            db.delete(DataBaseConstants.GUEST.TABLE_NAME, whereClause, whereArgs);
+            db.close();
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public GuestModel getGuestById(int guestId) {
+        try {
+            GuestModel guest = null;
+            final SQLiteDatabase db = this.mGuestDataBaseHelper.getReadableDatabase();
+
+            final String table = DataBaseConstants.GUEST.TABLE_NAME;
+            final String[] columns = {DataBaseConstants.GUEST.COLUMNS.ID, DataBaseConstants.GUEST.COLUMNS.NAME, DataBaseConstants.GUEST.COLUMNS.PRESENCE,};
+
+            final String selection = DataBaseConstants.GUEST.COLUMNS.ID + " = ?";
+            final String[] selectionArgs = {String.valueOf(guestId)};
+
+            final Cursor cursor = db.query(table, columns, selection, selectionArgs, null, null, null);
+
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                guest = GuestModel.getGuestModelFromCursor(cursor);
+            }
+
+            if (cursor != null) {
+                cursor.close();
+            }
+
+            return guest;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private ContentValues getGuestContentValues(GuestModel guest) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DataBaseConstants.GUEST.COLUMNS.NAME, guest.getName());
@@ -50,10 +108,4 @@ public class GuestRepository {
         return contentValues;
     }
 
-
-    public void update(GuestModel guest) {
-    }
-
-    public void delete(GuestModel guest) {
-    }
 }

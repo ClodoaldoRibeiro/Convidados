@@ -47,7 +47,7 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
     private void handleSave() {
         String name = mViewHolder.editText.getText().toString();
         int confirmation = getStatusConfirmation();
-        GuestModel guestModel = new GuestModel(name, confirmation);
+        GuestModel guestModel = new GuestModel(0,  name, confirmation);
 
         mGuestViewModel.save(guestModel);
     }
