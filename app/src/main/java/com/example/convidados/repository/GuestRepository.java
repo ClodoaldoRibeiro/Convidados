@@ -30,7 +30,31 @@ public class GuestRepository {
     }
 
     public List<GuestModel> getAll() {
-        return new ArrayList<GuestModel>();
+        ArrayList<GuestModel> guests = new ArrayList<>();
+
+        try {
+            final SQLiteDatabase db = this.mGuestDataBaseHelper.getReadableDatabase();
+
+            final String table = DataBaseConstants.GUEST.TABLE_NAME;
+            final String[] columns = {DataBaseConstants.GUEST.COLUMNS.ID, DataBaseConstants.GUEST.COLUMNS.NAME, DataBaseConstants.GUEST.COLUMNS.PRESENCE,};
+
+            final Cursor cursor = db.query(table, columns, null, null, null, null, null);
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    guests.add(GuestModel.getGuestModelFromCursor(cursor));
+                }
+            }
+
+            if (cursor != null) {
+                cursor.close();
+            }
+
+            return guests;
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     public boolean insert(GuestModel guest) {
@@ -74,7 +98,6 @@ public class GuestRepository {
 
     public GuestModel getGuestById(int guestId) {
         try {
-            GuestModel guest = null;
             final SQLiteDatabase db = this.mGuestDataBaseHelper.getReadableDatabase();
 
             final String table = DataBaseConstants.GUEST.TABLE_NAME;
@@ -87,14 +110,14 @@ public class GuestRepository {
 
             if (cursor != null && cursor.getCount() > 0) {
                 cursor.moveToFirst();
-                guest = GuestModel.getGuestModelFromCursor(cursor);
+                return GuestModel.getGuestModelFromCursor(cursor);
             }
 
             if (cursor != null) {
                 cursor.close();
             }
 
-            return guest;
+            return null;
         } catch (Exception e) {
             return null;
         }
@@ -107,5 +130,4 @@ public class GuestRepository {
 
         return contentValues;
     }
-
 }
