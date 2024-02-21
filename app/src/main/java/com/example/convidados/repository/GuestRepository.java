@@ -9,7 +9,6 @@ import com.example.convidados.constants.DataBaseConstants;
 import com.example.convidados.database.GuestDataBaseHelper;
 import com.example.convidados.model.GuestModel;
 
-import java.io.InvalidObjectException;
 import java.util.ArrayList;
 import java.util.List;
 

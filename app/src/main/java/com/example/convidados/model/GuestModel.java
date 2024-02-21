@@ -5,9 +5,6 @@ import android.database.Cursor;
 import com.example.convidados.constants.DataBaseConstants;
 
 public class GuestModel {
-    public GuestModel() {
-    }
-
     public GuestModel(int id, String name, int confirmation) {
         this.id = id;
         this.name = name;
@@ -17,7 +14,7 @@ public class GuestModel {
     private int id;
     private String name;
     private int confirmation;
-    
+
     public int getId() {
         return id;
     }
