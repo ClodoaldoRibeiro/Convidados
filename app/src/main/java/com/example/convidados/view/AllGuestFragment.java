@@ -1,13 +1,10 @@
 package com.example.convidados.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,9 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.convidados.R;
+import com.example.convidados.constants.GuestConstants;
 import com.example.convidados.databinding.FragmentAllGuestBinding;
 import com.example.convidados.model.GuestModel;
 import com.example.convidados.view.adapter.GuestAdapter;
+import com.example.convidados.view.listener.OnListClick;
 import com.example.convidados.viewmodel.AllGuestViewModel;
 
 import java.util.List;
@@ -40,6 +39,17 @@ public class AllGuestFragment extends Fragment {
         this.mViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         this.mViewHolder.recyclerView.setAdapter(this.mGuestAdapter);
 
+        OnListClick onListClick = guestId -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(GuestConstants.guestId, guestId);
+
+            Intent intent = new Intent(getContext(), GuestActivity.class);
+            intent.putExtras(bundle);
+
+            startActivity(intent);
+        };
+
+        this.mGuestAdapter.attachListener(onListClick);
         this.observers();
 
 
@@ -62,7 +72,7 @@ public class AllGuestFragment extends Fragment {
         this.mViewModel.guestModel.observe(getViewLifecycleOwner(), new Observer<List<GuestModel>>() {
             @Override
             public void onChanged(List<GuestModel> guestModels) {
-                mGuestAdapter.setList(guestModels);
+                mGuestAdapter.attachList(guestModels);
             }
         });
     }
