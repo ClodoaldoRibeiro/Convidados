@@ -95,7 +95,7 @@ public class GuestRepository {
         }
     }
 
-    public GuestModel getGuestById(int guestId) {
+    public GuestModel guestById(int guestId) {
         try {
             final SQLiteDatabase db = this.mGuestDataBaseHelper.getReadableDatabase();
 
