@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.convidados.R;
 import com.example.convidados.constants.GuestConfirmation;
 import com.example.convidados.constants.GuestConstants;
+import com.example.convidados.model.FeedbackModel;
 import com.example.convidados.model.GuestModel;
 import com.example.convidados.viewmodel.GuestViewModel;
 
@@ -62,23 +63,18 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        this.mGuestViewModel.feedback.observe(this, new Observer<Boolean>() {
+        this.mGuestViewModel.feedback.observe(this, new Observer<FeedbackModel>() {
             @Override
-            public void onChanged(Boolean aBoolean) {
-                if (aBoolean) {
-                    String str = "";
+            public void onChanged(FeedbackModel feedbackModel) {
+                Toast.makeText(getApplicationContext(), feedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
 
-                    if (mGuestId == 0) {
-                        str = "Convidado inserido com sucesso";
-                    } else {
-                        str = "Convidado atualizado com sucesso";
-                    }
-
-                    Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+                if (feedbackModel.isSuccess()) {
                     finish();
                 }
             }
         });
+
+
     }
 
     @Override
