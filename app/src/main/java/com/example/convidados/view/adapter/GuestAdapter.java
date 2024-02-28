@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.convidados.R;
 import com.example.convidados.model.GuestModel;
 import com.example.convidados.view.listener.OnListClick;
-import com.example.convidados.view.viewmodel.GuestViewHolder;
+import com.example.convidados.view.viewholder.GuestViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

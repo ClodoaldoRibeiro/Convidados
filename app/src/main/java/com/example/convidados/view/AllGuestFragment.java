@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.convidados.R;
 import com.example.convidados.constants.GuestConstants;
 import com.example.convidados.databinding.FragmentAllGuestBinding;
+import com.example.convidados.model.FeedbackModel;
 import com.example.convidados.model.GuestModel;
 import com.example.convidados.view.adapter.GuestAdapter;
 import com.example.convidados.view.listener.OnListClick;
@@ -29,6 +31,7 @@ public class AllGuestFragment extends Fragment {
     private final ViewHolder mViewHolder = new ViewHolder();
     private final GuestAdapter mGuestAdapter = new GuestAdapter();
 
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.mViewModel = new ViewModelProvider(this).get(AllGuestViewModel.class);
 
@@ -39,19 +42,26 @@ public class AllGuestFragment extends Fragment {
         this.mViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         this.mViewHolder.recyclerView.setAdapter(this.mGuestAdapter);
 
-        OnListClick onListClick = guestId -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(GuestConstants.guestId, guestId);
+        OnListClick onListClick = new OnListClick() {
+            @Override
+            public void onClick(int guestId) {
+                Bundle bundle = new Bundle();
+                bundle.putInt(GuestConstants.guestId, guestId);
 
-            Intent intent = new Intent(getContext(), GuestActivity.class);
-            intent.putExtras(bundle);
+                Intent intent = new Intent(getContext(), GuestActivity.class);
+                intent.putExtras(bundle);
 
-            startActivity(intent);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onDelete(int guestId) {
+                mViewModel.delete(guestId);
+            }
         };
 
         this.mGuestAdapter.attachListener(onListClick);
         this.observers();
-
 
         return root;
     }
@@ -73,6 +83,13 @@ public class AllGuestFragment extends Fragment {
             @Override
             public void onChanged(List<GuestModel> guestModels) {
                 mGuestAdapter.attachList(guestModels);
+            }
+        });
+
+        this.mViewModel.feedback.observe(getViewLifecycleOwner(), new Observer<FeedbackModel>() {
+            @Override
+            public void onChanged(FeedbackModel feedbackModel) {
+                Toast.makeText(getContext(), feedbackModel.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
