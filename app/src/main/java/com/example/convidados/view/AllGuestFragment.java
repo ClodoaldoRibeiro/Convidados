@@ -30,7 +30,7 @@ public class AllGuestFragment extends Fragment {
     private AllGuestViewModel mViewModel;
     private final ViewHolder mViewHolder = new ViewHolder();
     private final GuestAdapter mGuestAdapter = new GuestAdapter();
-
+    private int mFilter = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         this.mViewModel = new ViewModelProvider(this).get(AllGuestViewModel.class);
@@ -57,6 +57,7 @@ public class AllGuestFragment extends Fragment {
             @Override
             public void onDelete(int guestId) {
                 mViewModel.delete(guestId);
+                mViewModel.getGuestByFilter(mFilter);
             }
         };
 
@@ -69,7 +70,12 @@ public class AllGuestFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        this.mViewModel.getAll();
+
+        if (getArguments() != null) {
+            this.mFilter = getArguments().getInt(GuestConstants.filter);
+        }
+
+        this.mViewModel.getGuestByFilter(mFilter);
     }
 
     @Override

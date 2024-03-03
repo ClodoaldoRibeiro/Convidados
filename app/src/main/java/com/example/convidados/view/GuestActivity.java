@@ -73,8 +73,6 @@ public class GuestActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-
-
     }
 
     @Override
