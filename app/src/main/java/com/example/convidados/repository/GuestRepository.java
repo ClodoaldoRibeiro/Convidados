@@ -29,7 +29,7 @@ public class GuestRepository {
         return instance;
     }
 
-    private List<GuestModel> getList(String selection, String[] selectionArgs) {
+    private List<GuestModel> getGuests(String selection, String[] selectionArgs) {
         ArrayList<GuestModel> guests = new ArrayList<>();
 
         try {
@@ -58,7 +58,7 @@ public class GuestRepository {
 
     public List<GuestModel> getAllGuest() {
         try {
-            return this.getList(null, null);
+            return this.getGuests(null, null);
         } catch (Exception e) {
             return null;
         }
@@ -69,7 +69,7 @@ public class GuestRepository {
             final String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + " = ?";
             final String[] selectionArgs = {String.valueOf(GuestConfirmation.present)};
 
-            return this.getList(selection, selectionArgs);
+            return this.getGuests(selection, selectionArgs);
         } catch (Exception e) {
             return null;
         }
@@ -80,7 +80,7 @@ public class GuestRepository {
             final String selection = DataBaseConstants.GUEST.COLUMNS.PRESENCE + " = ?";
             final String[] selectionArgs = {String.valueOf(GuestConfirmation.absent)};
 
-            return this.getList(selection, selectionArgs);
+            return this.getGuests(selection, selectionArgs);
         } catch (Exception e) {
             return null;
         }
@@ -91,6 +91,7 @@ public class GuestRepository {
             final SQLiteDatabase db = this.mGuestDataBaseHelper.getWritableDatabase();
             db.insert(DataBaseConstants.GUEST.TABLE_NAME, null, getGuestContentValues(guest));
             db.close();
+
             return true;
         } catch (Exception e) {
             return false;
@@ -105,6 +106,7 @@ public class GuestRepository {
 
             db.update(DataBaseConstants.GUEST.TABLE_NAME, getGuestContentValues(guest), whereClause, whereArgs);
             db.close();
+
             return true;
         } catch (Exception e) {
             return false;
@@ -119,13 +121,14 @@ public class GuestRepository {
 
             db.delete(DataBaseConstants.GUEST.TABLE_NAME, whereClause, whereArgs);
             db.close();
+
             return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public GuestModel guestById(int guestId) {
+    public GuestModel getGuestById(int guestId) {
         try {
             final SQLiteDatabase db = this.mGuestDataBaseHelper.getReadableDatabase();
 

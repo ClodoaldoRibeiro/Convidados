@@ -5,15 +5,15 @@ import android.database.Cursor;
 import com.example.convidados.constants.DataBaseConstants;
 
 public class GuestModel {
+    private int id;
+    private String name;
+    private int confirmation;
+
     public GuestModel(int id, String name, int confirmation) {
         this.id = id;
         this.name = name;
         this.confirmation = confirmation;
     }
-
-    private int id;
-    private String name;
-    private int confirmation;
 
     public int getId() {
         return id;
@@ -33,10 +33,6 @@ public class GuestModel {
 
     public int getConfirmation() {
         return confirmation;
-    }
-
-    public void setConfirmation(int confirmation) {
-        this.confirmation = confirmation;
     }
 
     public static GuestModel getGuestModelFromCursor(Cursor cursorGuest) {

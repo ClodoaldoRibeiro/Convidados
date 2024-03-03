@@ -52,6 +52,6 @@ public class GuestViewModel extends AndroidViewModel {
     }
 
     public void guestById(int guestId) {
-        this.mGuest.setValue(this.mGuestRepository.guestById(guestId));
+        this.mGuest.setValue(this.mGuestRepository.getGuestById(guestId));
     }
 }

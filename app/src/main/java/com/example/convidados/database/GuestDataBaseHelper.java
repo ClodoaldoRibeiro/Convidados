@@ -10,10 +10,7 @@ public class GuestDataBaseHelper extends SQLiteOpenHelper {
     private static final String NAME = "convidados.db";
     private static final int VERSION = 1;
 
-    private static final String CREATE_TABLE_GUEST = "create table " + DataBaseConstants.GUEST.TABLE_NAME + " ("
-            + DataBaseConstants.GUEST.COLUMNS.ID + " integer primary key autoincrement, "
-            + DataBaseConstants.GUEST.COLUMNS.NAME + " text, "
-            + DataBaseConstants.GUEST.COLUMNS.PRESENCE + " integer);";
+    private static final String CREATE_TABLE_GUEST = "create table " + DataBaseConstants.GUEST.TABLE_NAME + " (" + DataBaseConstants.GUEST.COLUMNS.ID + " integer primary key autoincrement, " + DataBaseConstants.GUEST.COLUMNS.NAME + " text, " + DataBaseConstants.GUEST.COLUMNS.PRESENCE + " integer);";
 
     public GuestDataBaseHelper(Context context) {
         super(context, NAME, null, VERSION);
@@ -26,6 +23,5 @@ public class GuestDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-
     }
 }
